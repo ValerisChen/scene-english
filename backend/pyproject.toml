@@ -1,0 +1,52 @@
+[project]
+name = "scene-english-backend"
+version = "0.1.0"
+description = "逐场英语：API 服务和影片处理流水线"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "python-multipart>=0.0.9",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+    "sqlalchemy>=2.0",
+    "alembic>=1.13",
+    "psycopg[binary]>=3.2",
+    "celery[redis]>=5.4",
+    "anthropic>=1.0",
+    "mlx-whisper>=0.4",
+    "spacy>=3.8,<4",
+    "en-core-web-sm",
+    "wordfreq>=3.1",
+    "typer>=0.12",
+    "silero-vad>=6.2.3",
+    "demucs>=4.1.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "httpx>=0.27", "ruff>=0.6"]
+
+[project.scripts]
+scene-english = "app.cli:main"
+
+[tool.uv.sources]
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# 行宽交给 ruff format；提示词等长字符串不强行折行
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

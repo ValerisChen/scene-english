@@ -1,0 +1,15 @@
+diff --git a/dist/modules/src/isobmff/isobmff-demuxer.js b/dist/modules/src/isobmff/isobmff-demuxer.js
+index 83fcffba36aa4fe5b98360f0fc99b0e3f1cb8e91..4cfecec807a4b28a1db630de4fb80e05d52e02d2 100644
+--- a/dist/modules/src/isobmff/isobmff-demuxer.js
++++ b/dist/modules/src/isobmff/isobmff-demuxer.js
+@@ -881,6 +881,10 @@ export class IsobmffDemuxer extends Demuxer {
+                             else if (codecName === 'flac') {
+                                 track.info.codec = 'flac';
+                             }
++                            else if (codecName === '.mp3' || codecName === 'ms\u0000u') {
++                                // QuickTime 的老式 MP3 音轨：每个 sample 是一个完整的 MP3 帧
++                                track.info.codec = 'mp3';
++                            }
+                             else if (codecName === 'ulaw') {
+                                 track.info.codec = 'ulaw';
+                             }
